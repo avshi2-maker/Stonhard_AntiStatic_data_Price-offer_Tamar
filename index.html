@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+<title>אפשרויות ESD | Stonhard × תמר גרופ</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;600;700;800;900&family=JetBrains+Mono:wght@400;700&display=swap');
+:root{--deep-navy:#0a0e27;--electric-blue:#00d4ff;--warning-orange:#ff6b35;--success-green:#00ff88;--gold:#ffd700;--surface:#141b3d;--surface-light:#1e2a52;--text:#e8edf5;--text-dim:#8795b8;--border:#2a4058;--danger:#ef4444;--accent2:#fbbf24}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Heebo',sans-serif;background:var(--deep-navy);color:var(--text);line-height:1.6;overflow-x:hidden}
+.bg-grid{position:fixed;top:0;left:0;right:0;bottom:0;background:linear-gradient(90deg,rgba(0,212,255,.03) 1px,transparent 1px),linear-gradient(rgba(0,212,255,.03) 1px,transparent 1px);background-size:50px 50px;z-index:0;animation:gridPulse 8s ease-in-out infinite}
+@keyframes gridPulse{0%,100%{opacity:.3}50%{opacity:.6}}
+.container{position:relative;z-index:1;max-width:1100px;margin:0 auto;padding:0 20px}
+.hero{min-height:75vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:50px 20px 30px;position:relative}
+.hero-badge{display:inline-flex;align-items:center;gap:10px;background:rgba(255,107,53,.15);border:1.5px solid var(--warning-orange);padding:8px 20px;border-radius:30px;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:25px;animation:pulseGlow 2s ease-in-out infinite}
+@keyframes pulseGlow{0%,100%{box-shadow:0 0 10px rgba(255,107,53,.3)}50%{box-shadow:0 0 25px rgba(255,107,53,.5)}}
+.hero h1{font-size:clamp(34px,7vw,64px);font-weight:900;line-height:1.1;margin-bottom:18px;background:linear-gradient(135deg,#00d4ff,#00ff88);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-subtitle{font-size:clamp(15px,3vw,19px);color:var(--text-dim);max-width:700px;margin:0 auto 35px;line-height:1.7}
+.tab-nav{position:sticky;top:0;z-index:99;background:var(--surface);border-bottom:2px solid var(--border);box-shadow:0 4px 20px rgba(0,0,0,.4)}
+.tab-container{max-width:1200px;margin:0 auto;display:flex;overflow-x:auto;scrollbar-width:thin}
+.tab-container::-webkit-scrollbar{height:4px}
+.tab-container::-webkit-scrollbar-track{background:var(--deep-navy)}
+.tab-container::-webkit-scrollbar-thumb{background:var(--electric-blue);border-radius:2px}
+.tab-btn{flex:1;min-width:115px;padding:16px 12px;background:transparent;border:none;border-bottom:3px solid transparent;color:var(--text-dim);font-family:'Heebo',sans-serif;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;cursor:pointer;transition:all .3s;white-space:nowrap;text-align:center}
+.tab-btn:hover{color:var(--electric-blue);background:rgba(0,212,255,.08)}
+.tab-btn.active{color:var(--electric-blue);border-bottom-color:var(--electric-blue);background:rgba(0,212,255,.12)}
+.tab-content{display:none;animation:fadeIn .5s ease-out}
+.tab-content.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+.section{padding:50px 20px;position:relative}
+.section-header{text-align:center;margin-bottom:45px}
+.section-tag{display:inline-block;background:rgba(0,212,255,.1);border:1px solid rgba(0,212,255,.3);color:var(--electric-blue);padding:6px 16px;border-radius:20px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.3px;margin-bottom:18px}
+.section-title{font-size:clamp(26px,5vw,42px);font-weight:900;margin-bottom:14px;line-height:1.2}
+.section-subtitle{font-size:16px;color:var(--text-dim);max-width:700px;margin:0 auto}
+.features-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px}
+.feature-card{background:linear-gradient(135deg,var(--surface) 0%,var(--surface-light) 100%);border:1px solid rgba(0,212,255,.15);border-radius:16px;padding:28px;transition:all .4s;position:relative;overflow:hidden}
+.feature-card:hover{transform:translateY(-6px);border-color:var(--electric-blue);box-shadow:0 18px 45px rgba(0,212,255,.2)}
+.feature-icon{font-size:40px;margin-bottom:16px;display:inline-block;filter:drop-shadow(0 0 18px rgba(0,212,255,.3))}
+.feature-title{font-size:19px;font-weight:800;margin-bottom:11px;color:var(--electric-blue)}
+.feature-desc{color:var(--text-dim);line-height:1.7;font-size:14px}
+.pricing-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px;max-width:950px;margin:0 auto}
+.pricing-card{background:linear-gradient(135deg,#1a2447,#0f1632);border:2px solid;border-radius:20px;padding:35px 30px;text-align:center;position:relative;box-shadow:0 18px 55px rgba(0,0,0,.4);transition:transform .3s}
+.pricing-card:hover{transform:translateY(-4px)}
+.pricing-badge{position:absolute;top:-14px;left:50%;transform:translateX(-50%);padding:6px 20px;border-radius:28px;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.7px;white-space:nowrap}
+.pc-orange{border-color:rgba(251,191,36,.5);box-shadow:0 18px 55px rgba(251,191,36,.2)}
+.pc-orange .pricing-badge{background:linear-gradient(135deg,var(--warning-orange),#ff8c5a);color:#fff}
+.pc-green{border-color:var(--success-green);box-shadow:0 25px 70px rgba(0,255,136,.3)}
+.pc-green .pricing-badge{background:linear-gradient(135deg,var(--success-green),#16a34a);color:#fff}
+.pricing-title{font-size:22px;font-weight:900;margin:18px 0 13px}
+.pricing-amount{font-size:48px;font-weight:900;font-family:'JetBrains Mono',monospace;margin:18px 0;color:var(--gold)!important;text-shadow:0 0 18px rgba(255,215,0,.5)}
+.pricing-note{color:var(--text-dim);font-size:12px;margin-bottom:22px}
+.pricing-features{text-align:right;margin:22px 0;list-style:none}
+.pricing-features li{padding:9px 0;border-bottom:1px solid rgba(255,255,255,.08);font-size:13px;line-height:1.6}
+.compare-table{background:var(--surface);border:1px solid rgba(0,212,255,.2);border-radius:16px;overflow:hidden;margin:25px auto;max-width:850px}
+.compare-table table{width:100%;border-collapse:collapse}
+.compare-table th{background:linear-gradient(135deg,var(--surface-light),var(--deep-navy));padding:16px;text-align:right;font-weight:800;font-size:12px;text-transform:uppercase;letter-spacing:.7px;color:var(--electric-blue);border-bottom:2px solid rgba(0,212,255,.3)}
+.compare-table td{padding:14px 16px;border-bottom:1px solid rgba(255,255,255,.05);font-size:13px}
+.compare-table tr:hover{background:rgba(0,212,255,.05)}
+.check-yes{color:var(--success-green);font-size:17px;font-weight:900}
+.check-no{color:var(--warning-orange);font-size:17px;font-weight:900}
+.alert{padding:18px 22px;border-radius:11px;font-size:13px;margin:22px 0;line-height:1.7;text-align:right}
+.alert-danger{background:rgba(239,68,68,.1);border:1.5px solid rgba(239,68,68,.3);color:#fca5a5}
+.alert-info{background:rgba(0,212,255,.1);border:1.5px solid rgba(0,212,255,.3);color:#93c5fd}
+.alert-warn{background:rgba(251,191,36,.1);border:1.5px solid rgba(251,191,36,.3);color:var(--accent2)}
+.cta-btn{display:inline-block;background:linear-gradient(135deg,var(--electric-blue),#00a8cc);color:#fff;padding:16px 45px;border-radius:45px;font-size:16px;font-weight:800;text-decoration:none;text-transform:uppercase;letter-spacing:.7px;box-shadow:0 9px 35px rgba(0,212,255,.4);transition:all .3s;border:none;cursor:pointer;font-family:'Heebo',sans-serif;text-align:center;line-height:1.5}
+.cta-btn:hover{transform:translateY(-3px);box-shadow:0 14px 45px rgba(0,212,255,.6)}
+.footer{background:var(--surface);border-top:1px solid rgba(0,212,255,.2);padding:30px 20px;text-align:center;color:var(--text-dim);font-size:13px}
+.footer-contact{display:flex;justify-content:center;gap:22px;flex-wrap:wrap;margin-bottom:16px}
+.footer-item{display:flex;align-items:center;gap:6px}
+@media (max-width:768px){.pricing-grid{grid-template-columns:1fr}.features-grid{grid-template-columns:1fr}.tab-btn{font-size:10px;padding:13px 9px;min-width:95px}.section{padding:40px 20px}}
+</style>
+</head>
+<body>
+<div class="bg-grid"></div>
+<section class="hero">
+<div class="container">
+<div class="hero-badge"><span>⚡</span> שתי אפשרויות ESD — בחרו את רמת ההגנה</div>
+<h1>בקרת ESD מתקדמת<br>לסביבות קריטיות</h1>
+<p class="hero-subtitle"><strong>אפשרויות מומלצות לפרויקט רצפת אפוקסי חדשה STONHARD</strong><br>שדרוג ESD — הגנה מקסימלית מפני פריקות אלקטרוסטטיות<br><span style="font-size:13px;opacity:.7">תאריך: 19/12/2024</span></p>
+</div>
+</section>
+<nav class="tab-nav">
+<div class="tab-container">
+<button class="tab-btn active" onclick="showTab('education')">📚 ידע בסיסי</button>
+<button class="tab-btn" onclick="showTab('why')">💡 למה ESD?</button>
+<button class="tab-btn" onclick="showTab('options')">⚡ 2 אפשרויות</button>
+<button class="tab-btn" onclick="showTab('comparison')">📊 השוואה</button>
+<button class="tab-btn" onclick="showTab('pricing')">💰 מחירון</button>
+<button class="tab-btn" onclick="showTab('technical')">🔬 מפרט</button>
+<button class="tab-btn" onclick="showTab('contact')">📞 קשר</button>
+</div>
+</nav>
+<div id="tab-education" class="tab-content active">
+<section class="section">
+<div class="container">
+<div class="section-header">
+<span class="section-tag">📚 ידע ומודעות</span>
+<h2 class="section-title">תופעת Static Control בתהליכים תעשייתיים</h2>
+<p class="section-subtitle">הבנה מעמיקה של הסיכונים והפתרונות — לצוות תמר גרופ</p>
+</div>
+<div style="max-width:850px;margin:0 auto;background:var(--surface);border:1px solid var(--border);border-radius:15px;padding:35px">
+<h3 style="color:var(--electric-blue);font-size:23px;margin-bottom:18px;text-align:right">⚡ מהי פריקה אלקטרוסטטית (ESD)?</h3>
+<p style="font-size:15px;line-height:1.9;color:var(--text);text-align:right;margin-bottom:28px"><strong>ESD (Electrostatic Discharge)</strong> הינה העברה פתאומית של מטען חשמלי בין שני עצמים בעלי פוטנציאל חשמלי שונה. במילים פשוטות: כאשר אדם או חפץ מצטבר עליו מטען חשמלי סטטי ונוגע בעצם מוליך — מתרחשת <strong>פריקת ניצוץ</strong>.</p>
+<div style="height:2px;background:var(--border);margin:28px 0"></div>
+<h3 style="color:var(--warning-orange);font-size:23px;margin-bottom:18px;text-align:right">🔥 הסיכונים בסביבות תעשייתיות</h3>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:32px">
+<div style="background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.3);border-radius:13px;padding:23px">
+<h4 style="color:#fca5a5;font-size:17px;margin-bottom:13px">💥 סיכוני בטיחות</h4>
+<ul style="font-size:14px;line-height:1.95;color:var(--text-dim);list-style:none;padding:0">
+<li>• התלקחות חומרים נפיצים ודליקים</li>
+<li>• פיצוצים בסביבות אחסון תחמושת</li>
+<li>• פציעות עובדים מזעזועי חשמל</li>
+<li>• שריפות במעבדות כימיקלים</li>
+</ul>
+</div>
+<div style="background:rgba(251,191,36,.1);border:1px solid rgba(251,191,36,.3);border-radius:13px;padding:23px">
+<h4 style="color:var(--accent2);font-size:17px;margin-bottom:13px">💸 נזקים כלכליים</h4>
+<ul style="font-size:14px;line-height:1.95;color:var(--text-dim);list-style:none;padding:0">
+<li>• נזק לציוד אלקטרוני במיליונים</li>
+<li>• השבתת קווי ייצור</li>
+<li>• פסילת מוצרים רגישים</li>
+<li>• תביעות ביטוח ואובדן מוניטין</li>
+</ul>
+</div>
+</div>
+<div style="height:2px;background:var(--border);margin:28px 0"></div>
+<h3 style="color:var(--success-green);font-size:23px;margin-bottom:18px;text-align:right">🔬 איך נוצר מטען סטטי?</h3>
+<div style="background:rgba(0,212,255,.06);border-right:4px solid var(--electric-blue);padding:23px;border-radius:10px;margin-bottom:28px">
+<p style="font-size:15px;line-height:1.9;color:var(--text);text-align:right;margin:0"><strong style="color:var(--electric-blue);font-size:17px">תהליך Triboelectric Charging:</strong><br><br><strong>1. חיכוך ומגע:</strong> כאשר שני חומרים שונים נוגעים זה בזה ונפרדים — מתרחשת העברת אלקטרונים.<br><br><strong>2. הפרדת מטענים:</strong> אחד החומרים מקבל מטען חיובי (+) והשני שלילי (-).<br><br><strong>3. הצטברות מתח:</strong> בסביבות יבשות המטען מצטבר ויכול להגיע ל-<strong>עשרות אלפי וולט!</strong><br><br><strong>4. פריקה:</strong> כאשר החומר הטעון נוגע במוליך מוארק — מתרחשת פריקה פתאומית.</p>
+</div>
+<div style="background:rgba(239,68,68,.12);border:2px solid var(--danger);border-radius:13px;padding:28px;margin-bottom:32px">
+<h4 style="color:#fca5a5;font-size:19px;margin-bottom:18px;text-align:center">⚠️ נתונים מדאיגים</h4>
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:18px;text-align:center">
+<div><div style="font-size:34px;font-weight:900;color:var(--danger)">35,000V</div><div style="font-size:12px;color:var(--text-dim);margin-top:7px;line-height:1.5">מתח טיפוסי על אדם<br>הולך על רצפת ויניל</div></div>
+<div><div style="font-size:34px;font-weight:900;color:var(--danger)">0.2mJ</div><div style="font-size:12px;color:var(--text-dim);margin-top:7px;line-height:1.5">אנרגיה מינימלית<br>להצתת אבק דליק</div></div>
+<div><div style="font-size:34px;font-weight:900;color:var(--danger)">10V</div><div style="font-size:12px;color:var(--text-dim);margin-top:7px;line-height:1.5">מספיק כדי להרוס<br>רכיב אלקטרוני</div></div>
+</div>
+</div>
+<div style="height:2px;background:var(--border);margin:28px 0"></div>
+<h3 style="color:var(--success-green);font-size:23px;margin-bottom:18px;text-align:right">✅ הפתרון: רצפת ESD</h3>
+<p style="font-size:15px;line-height:1.9;color:var(--text);text-align:right;margin-bottom:23px">רצפת ESD פועלת על עיקרון פשוט: <strong>פיזור מבוקר ורציף של המטען לאדמה</strong> לפני שהוא מצטבר לרמות מסוכנות.</p>
+<div style="background:rgba(0,212,255,.1);border:1.5px solid rgba(0,212,255,.3);border-radius:13px;padding:28px;text-align:center">
+<p style="font-size:16px;line-height:1.8;color:var(--text);margin:0"><strong style="color:var(--electric-blue);font-size:19px">🎯 המסקנה לתמר גרופ:</strong><br><br>בסביבות עבודה עם חומרים אנרגטיים ומטענים — רצפת ESD אינה "שדרוג נחמד", אלא <strong style="color:#fff;font-size:18px">דרישה בטיחותית מוחלטת</strong> למניעת אסונות.<br><br><span style="color:var(--success-green);font-weight:700;font-size:17px">Option 2 (Stonclad ESD)</span> היא ההשקעה היחידה המספקת הגנה מוחלטת.</p>
+</div>
+</div>
+</div>
+</section>
+</div>
+<div id="tab-why" class="tab-content">
+<section class="section">
+<div class="container">
+<div class="section-header">
+<span class="section-tag">למה ESD קריטי לתמר?</span>
+<h2 class="section-title">3 סיבות מרכזיות</h2>
+</div>
+<div class="features-grid">
+<div class="feature-card">
+<div class="feature-icon">💥</div>
+<h3 class="feature-title">בטיחות עם חומרים אנרגטיים</h3>
+<p class="feature-desc"><strong>פריקה סטטית אחת = סכנת חיים.</strong> רק <strong>Option 2 (Stonclad ESD)</strong> מספקת הגנה מוחלטת. מערכת spark-proof מונעת התלקחות ופיצוץ.<br><br><span style="color:var(--danger)">⚠️ Option 1 לא מתאימה לסביבות נפיצות!</span></p>
+</div>
+<div class="feature-card">
+<div class="feature-icon">🔬</div>
+<h3 class="feature-title">הגנת ציוד מחקר</h3>
+<p class="feature-desc"><strong>מכשור רגיש = מיליונים.</strong> מעבדות תמר כוללות ציוד מתקדם שעלול להיפגע מ-ESD.<br><br><strong>Option 1:</strong> Static control (משתנה)<br><strong>Option 2:</strong> 0.025–1.0 MΩ מובטח</p>
+</div>
+<div class="feature-card">
+<div class="feature-icon">🚀</div>
+<h3 class="feature-title">חוזים עתידיים</h3>
+<p class="feature-desc"><strong>פתיחת דלתות לפרויקטים חדשים.</strong> חוזים ממשלתיים ובינלאומיים דורשים ESD מוסמכת.<br><br><strong>Option 2</strong> עומדת ב-ANSI/ESD S20.20, IEC 61340-5-1, NFGS-09965.</p>
+</div>
+</div>
+</div>
+</section>
+</div>
+<div id="tab-options" class="tab-content">
+<section class="section">
+<div class="container">
+<div class="section-header">
+<span class="section-tag">שתי אפשרויות טכניות</span>
+<h2 class="section-title">בחרו את רמת ההגנה</h2>
+</div>
+<div class="features-grid">
+<div class="feature-card" style="border-color:rgba(251,191,36,.4)">
+<div style="display:flex;justify-content:space-between;margin-bottom:13px"><span style="background:rgba(251,191,36,.2);color:var(--accent2);padding:3px 11px;border-radius:18px;font-size:10px;font-weight:800">TOPCOAT ONLY</span></div>
+<div class="feature-icon">⚡</div>
+<h3 class="feature-title" style="color:var(--warning-orange)">Option 1: Nuisance Control</h3>
+<p class="feature-desc" style="margin-bottom:13px"><strong>Stonkote AT5 / ESD</strong> — ציפוי מוליך (4–7 mil) מעל Stonclad GS.</p>
+<ul style="text-align:right;color:var(--text-dim);font-size:13px;line-height:1.85;list-style:none;padding:0">
+<li>✓ בקרת static charge generation</li>
+<li>✓ מתאים לסביבות משרדים</li>
+<li>✓ <strong>לא guaranteed range</strong></li>
+<li>✓ התקנה קלה (+1 יום)</li>
+<li style="color:var(--warning-orange);font-weight:600">⚠️ לא spark-proof</li>
+</ul>
+</div>
+<div class="feature-card" style="border-color:var(--success-green);box-shadow:0 0 28px rgba(0,255,136,.2)">
+<div style="display:flex;justify-content:space-between;margin-bottom:13px"><span style="background:rgba(34,197,94,.2);color:var(--success-green);padding:3px 11px;border-radius:18px;font-size:10px;font-weight:800">⭐ מומלץ לתמר</span></div>
+<div class="feature-icon">🛡️</div>
+<h3 class="feature-title" style="color:var(--success-green)">Option 2: Full Spark-Proof</h3>
+<p class="feature-desc" style="margin-bottom:13px"><strong>Stonclad ESD</strong> — מערכת מלאה 6mm עם carbon elements.</p>
+<ul style="text-align:right;color:var(--text-dim);font-size:13px;line-height:1.85;list-style:none;padding:0">
+<li style="color:var(--success-green)">✓ <strong>Spark-proof</strong> — אפס ניצוצות</li>
+<li style="color:var(--success-green)">✓ <strong>0.025–1.0 MΩ guaranteed</strong></li>
+<li style="color:var(--success-green)">✓ מתאים לחומרים נפיצים</li>
+<li style="color:var(--success-green)">✓ ANSI/ESD S20.20</li>
+<li style="color:var(--success-green)">✓ High-impact (9,500 psi)</li>
+</ul>
+</div>
+</div>
+<div class="alert alert-danger" style="margin-top:35px;text-align:center;max-width:750px;margin-left:auto;margin-right:auto">
+<div style="font-size:18px;font-weight:800;margin-bottom:11px">⚠️ המלצה קריטית</div>
+<p style="font-size:15px;margin:0">בשל העבודה עם חומרי נפץ — <strong style="color:#fff">Option 2 הוא האפשרות הבטוחה היחידה.</strong> Option 1 מתאים רק למשרדים.</p>
+</div>
+</div>
+</section>
+</div>
+<div id="tab-comparison" class="tab-content">
+<section class="section">
+<div class="container">
+<div class="section-header">
+<span class="section-tag">השוואה טכנית</span>
+<h2 class="section-title">Option 1 vs. Option 2</h2>
+</div>
+<div class="compare-table">
+<table>
+<thead><tr><th>פרמטר</th><th style="text-align:center;color:var(--warning-orange)">Option 1</th><th style="text-align:center;color:var(--success-green)">Option 2</th></tr></thead>
+<tbody>
+<tr><td><strong>System Type</strong></td><td style="text-align:center">Topcoat 4–7 mil</td><td style="text-align:center;color:var(--success-green)"><strong>Full 6mm mortar</strong></td></tr>
+<tr><td><strong>Surface Resistance</strong></td><td style="text-align:center">Variable — <strong>not guaranteed</strong></td><td style="text-align:center;color:var(--success-green)"><strong>0.025–1.0 MΩ</strong><br>(guaranteed)</td></tr>
+<tr><td><strong>Spark Generation</strong></td><td style="text-align:center;color:var(--danger)"><span class="check-no">✗</span> Not spark-proof</td><td style="text-align:center;color:var(--success-green)"><span class="check-yes">✓</span> <strong>No sparks</strong></td></tr>
+<tr><td><strong>For Explosives?</strong></td><td style="text-align:center;color:var(--danger)"><span class="check-no">✗</span> NO</td><td style="text-align:center;color:var(--success-green)"><span class="check-yes">✓</span> <strong>YES</strong></td></tr>
+<tr><td><strong>Conductive</strong></td><td style="text-align:center">Surface only</td><td style="text-align:center;color:var(--success-green)">Full 6mm</td></tr>
+<tr><td><strong>Compressive</strong></td><td style="text-align:center">N/A</td><td style="text-align:center;color:var(--success-green)"><strong>9,500 psi</strong></td></tr>
+<tr><td><strong>Impact</strong></td><td style="text-align:center;color:var(--danger)">Light only</td><td style="text-align:center;color:var(--success-green)"><strong>Heavy-duty</strong></td></tr>
+<tr><td><strong>Standards</strong></td><td style="text-align:center">Static control only</td><td style="text-align:center;color:var(--success-green)"><strong>ANSI/ESD S20.20</strong></td></tr>
+<tr><td><strong>Installation</strong></td><td style="text-align:center;color:var(--accent2)">+1 day</td><td style="text-align:center">+4 days</td></tr>
+<tr style="background:rgba(0,212,255,.05);font-weight:700"><td><strong>Cost (400 m²)</strong></td><td style="text-align:center;font-size:20px;color:var(--accent2)">€35,000</td><td style="text-align:center;font-size:20px;color:var(--success-green)">€59,500</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+</div>
+<div id="tab-pricing" class="tab-content">
+<section class="section">
+<div class="container">
+<div class="section-header">
+<span class="section-tag">מחירון ESD</span>
+<h2 class="section-title">שתי רמות מחיר</h2>
+</div>
+<div class="pricing-grid">
+<div class="pricing-card pc-orange">
+<div class="pricing-badge">Option 1</div>
+<h3 class="pricing-title" style="color:var(--warning-orange)">Stonkote AT5/ESD</h3>
+<div class="pricing-amount">€35,000</div>
+<p class="pricing-note">תוספת לפרויקט (400 מ"ר)</p>
+<ul class="pricing-features">
+<li>ATK Conductive Primer</li>
+<li>Stonkote AT5/ESD topcoat</li>
+<li>Coverage: 4–7 mil</li>
+<li>10 צבעים זמינים</li>
+<li>התנגדות: משתנה</li>
+<li style="color:var(--danger)">⚠️ לא spark-proof</li>
+<li>משרדים, data centers</li>
+<li style="color:var(--danger);font-weight:700">❌ לא לנפיצות</li>
+<li>זמן: +1 יום</li>
+<li>בדיקות + דוח ESD</li>
+</ul>
+<div style="margin-top:22px;padding-top:18px;border-top:1px solid rgba(255,255,255,.1);font-size:12px;color:var(--text-dim);text-align:right"><strong style="color:var(--warning-orange)">שימושים:</strong><br>• משרדים<br>• מעבדות קלות<br>• data centers</div>
+</div>
+<div class="pricing-card pc-green">
+<div class="pricing-badge">⭐ Option 2 — מומלץ</div>
+<h3 class="pricing-title" style="color:var(--success-green)">Stonclad ESD</h3>
+<div class="pricing-amount">€59,500</div>
+<p class="pricing-note">תוספת לפרויקט (400 מ"ר)</p>
+<ul class="pricing-features">
+<li style="color:var(--success-green)">✓ Stonset Primer מוליך</li>
+<li style="color:var(--success-green)">✓ Stonclad ESD 6mm</li>
+<li style="color:var(--success-green)">✓ ESD Sealer כפול</li>
+<li style="color:var(--success-green)">✓ אופציה: topcoat צבעוני</li>
+<li style="color:var(--success-green)"><strong>✓ 0.025–1.0 MΩ</strong></li>
+<li style="color:var(--success-green)"><strong>✓ SPARK-PROOF</strong></li>
+<li style="color:var(--success-green)">✓ Compressive: 9,500 psi</li>
+<li style="color:var(--success-green)">✓ מתאים לנפיצות</li>
+<li style="color:var(--success-green)">✓ ANSI/ESD S20.20</li>
+<li>זמן: +4 ימים</li>
+<li>תעודת ESD מלאה</li>
+</ul>
+<div style="margin-top:22px;padding-top:18px;border-top:1px solid rgba(255,255,255,.1);font-size:12px;color:var(--text-dim);text-align:right"><strong style="color:var(--success-green)">שימושים:</strong><br>• <strong>חומרי נפץ</strong><br>• מעבדות אנרגטיות<br>• munitions</div>
+</div>
+</div>
+<div class="alert alert-info" style="margin-top:35px;text-align:center;max-width:750px;margin-left:auto;margin-right:auto">
+<div style="font-size:19px;font-weight:800;margin-bottom:13px">📜 תעודת ESD Compliance</div>
+<p style="font-size:14px;line-height:1.8;margin:0">לאחר ההתקנה, <strong style="color:#fff">מהנדס ESD מוסמך</strong> יבצע בדיקות ויספק:<br><br><strong style="color:var(--electric-blue)">• Static Control Report</strong> + מפת קריאות<br><strong style="color:var(--electric-blue)">• תעודת ESD Compliance</strong><br><strong style="color:var(--electric-blue)">• תיעוד לביטוח</strong></p>
+</div>
+<div style="text-align:center;margin-top:35px">
+<p style="font-size:15px;color:var(--text-dim);margin-bottom:22px">💡 <strong>ROI:</strong> Option 2 עולה €24,500 יותר (+70%) אך מספק הגנה מוחלטת — <strong style="color:var(--success-green)">ביטוח חיים</strong>.</p>
+</div>
+</div>
+</section>
+</div>
+<div id="tab-technical" class="tab-content">
+<section class="section">
+<div class="container">
+<div class="section-header">
+<span class="section-tag">פרטים טכניים</span>
+<h2 class="section-title">מפרט שתי המערכות</h2>
+</div>
+<div class="compare-table" style="margin-bottom:45px">
+<h3 style="text-align:center;color:var(--warning-orange);margin:22px 0;font-size:22px">📋 Option 1: Stonkote AT5/ESD</h3>
+<table>
+<tbody>
+<tr><td><strong>Product Type</strong></td><td>4-comp static control (AT5) / 2-comp conductive (ESD)</td></tr>
+<tr><td><strong>Thickness</strong></td><td>4–7 mil DFT</td></tr>
+<tr><td><strong>Surface Resistance</strong></td><td style="color:var(--warning-orange)">&lt;1.0 MΩ (ESD) — not guaranteed</td></tr>
+<tr><td><strong>Spark Generation</strong></td><td style="color:var(--danger)"><strong>Not spark-proof</strong></td></tr>
+<tr><td><strong>Test Method</strong></td><td>ESD-S7.1 | ESD STM97.2</td></tr>
+<tr><td><strong>Cure Rate</strong></td><td>8 hrs light | 24 hrs normal</td></tr>
+<tr><td><strong>VOC</strong></td><td>AT5: 74 g/l | ESD: 10 g/l</td></tr>
+<tr><td><strong>Colors</strong></td><td>10 standard (AT5) | 8 (ESD)</td></tr>
+<tr><td><strong>Traffic</strong></td><td style="color:var(--danger)">Foot + light cart only</td></tr>
+<tr><td><strong>For Explosives?</strong></td><td style="color:var(--danger);font-weight:700">NO</td></tr>
+</tbody>
+</table>
+</div>
+<div class="compare-table">
+<h3 style="text-align:center;color:var(--success-green);margin:22px 0;font-size:22px">🛡️ Option 2: Stonclad ESD</h3>
+<table>
+<tbody>
+<tr><td><strong>Product Type</strong></td><td>4-component conductive spark-proof mortar</td></tr>
+<tr><td><strong>Thickness</strong></td><td>6 mm nominal</td></tr>
+<tr><td><strong>Surface Resistance</strong></td><td style="color:var(--success-green)"><strong>0.025–1.0 MΩ GUARANTEED</strong></td></tr>
+<tr><td><strong>Spark Generation</strong></td><td style="color:var(--success-green)"><strong>No visible sparks</strong> (NFGS-09965)</td></tr>
+<tr><td><strong>Compressive</strong></td><td><strong>9,500 psi</strong> (ASTM C-579)</td></tr>
+<tr><td><strong>Tensile</strong></td><td>1,700 psi (ASTM C-307)</td></tr>
+<tr><td><strong>Flexural</strong></td><td>4,800 psi (ASTM C-580)</td></tr>
+<tr><td><strong>Hardness</strong></td><td>75-80 Shore D</td></tr>
+<tr><td><strong>Abrasion</strong></td><td>0.08g max loss (ASTM D-4060)</td></tr>
+<tr><td><strong>VOC</strong></td><td>10 g/l mortar | 80 g/l sealer</td></tr>
+<tr><td><strong>Standards</strong></td><td style="color:var(--success-green)"><strong>ANSI/ESD S20.20 | IEC 61340-5-1</strong></td></tr>
+<tr><td><strong>For Explosives?</strong></td><td style="color:var(--success-green);font-weight:700"><strong>YES</strong></td></tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+</div>
+<div id="tab-contact" class="tab-content">
+<section class="section" style="background:linear-gradient(135deg,var(--deep-navy),#0d1128);border-top:1px solid rgba(0,212,255,.2);border-bottom:1px solid rgba(0,212,255,.2)">
+<div class="container" style="text-align:center">
+<h2 class="section-title" style="margin-bottom:18px">מוכנים לשדרג?</h2>
+<p class="section-subtitle" style="margin-bottom:35px">צור קשר עכשיו לקבלת הצעת מחיר מפורטת</p>
+<div style="max-width:450px;margin:0 auto">
+<a href="tel:+972505231042" class="cta-btn" style="font-size:17px;padding:20px 55px;margin-bottom:18px">📞 צלצל לאבשי ספיר<br><span style="font-size:28px;font-weight:900;letter-spacing:2px;margin-top:9px;display:block">050-5231042</span></a>
+<div style="margin-top:35px;padding:28px;background:var(--surface);border:1px solid var(--border);border-radius:15px">
+<h4 style="color:var(--electric-blue);margin-bottom:13px">פרטי קשר</h4>
+<p style="color:var(--text-dim);font-size:14px;line-height:1.95"><strong>📧 Email:</strong> avshi@sapirim.com<br><strong>🌐 Web:</strong> <a href="https://www.stonhard.com" target="_blank" style="color:var(--electric-blue);text-decoration:none">www.stonhard.com</a></p>
+</div>
+</div>
+</div>
+</section>
+</div>
+<footer class="footer">
+<div class="footer-contact">
+<div class="footer-item"><span>👤</span> <span>אבשי ספיר</span></div>
+<div class="footer-item"><span>📱</span> <span>050-5231042</span></div>
+<div class="footer-item"><span>📧</span> <span>avshi@sapirim.com</span></div>
+<div class="footer-item"><span>🌐</span> <a href="https://www.stonhard.com" target="_blank" style="color:var(--electric-blue);text-decoration:none">www.stonhard.com</a></div>
+</div>
+<div style="border-top:1px solid rgba(255,255,255,.1);padding-top:16px;margin-top:16px">
+<p style="margin:5px 0"><strong>אפשרויות שדרוג ESD</strong> לפרויקט STONHARD — תמר גרופ, קיסריה</p>
+<p style="font-size:11px;opacity:.6">Stonhard ESD Flooring Solutions | תאריך: 19/12/2024</p>
+</div>
+</footer>
+<script>
+function showTab(tabId){const tabs=document.querySelectorAll('.tab-content');tabs.forEach(tab=>tab.classList.remove('active'));const btns=document.querySelectorAll('.tab-btn');btns.forEach(btn=>btn.classList.remove('active'));document.getElementById('tab-'+tabId).classList.add('active');event.target.classList.add('active');window.scrollTo({top:0,behavior:'smooth'})}
+const fadeObserver=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(entry.isIntersecting){entry.target.style.opacity='1';entry.target.style.transform='translateY(0)'}})},{threshold:.1});document.querySelectorAll('.feature-card,.compare-table,.pricing-card').forEach(el=>{el.style.opacity='0';el.style.transform='translateY(30px)';el.style.transition='all .6s ease-out';fadeObserver.observe(el)})
+</script>
+</body>
+</html>
